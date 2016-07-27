@@ -8,15 +8,11 @@ android:
   - tools
   - build-tools-24.0.1
   - android-24
-
-  # Additional components
-  - extra-google-m2repository
-  - extra-android-m2repository
-  - extra-android-support
-
-  # Emulator for the tests
+ # Emulator for the tests
   - sys-img-armeabi-v7a-android-23
 
+notifications:
+  email: false
 
 before_install:
   - pip install --user codecov
@@ -33,8 +29,9 @@ before_install:
 
 before_script:
   - chmod +x gradlew
-  - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI
+  - echo no | android create avd --force --n test --t $ANDROID_TARGET --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
 
 script:
  - sudo chmod +x gradlew
